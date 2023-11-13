@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS tor_user_db;
+CREATE DATABASE tor_user_db;
