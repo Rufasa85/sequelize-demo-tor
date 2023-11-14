@@ -96,4 +96,34 @@ router.delete("/:id", (req, res) => {
       });
   });
 
+  //login
+  router.post("/login",(req,res)=>{
+    //1. accept a email password
+
+    //2. find that record in our database
+    User.findOne({
+      where:{
+        email:req.body.email
+      }
+    }).then(foundUser=>{
+      if(!foundUser){
+        res.status(401).json({msg:"incorrect username/password"})
+      } else{
+        //3. compare entered password to saved password
+        if(req.body.password!==foundUser.password){
+          res.status(401).json({msg:"incorrect username/password"})
+        } else {
+          //4. if match, send back record
+          res.json(foundUser);
+        }
+      }
+    }) .catch((err) => {
+      res.status(500).json({
+        msg: "oh no an error!",
+        err,
+      });
+    });
+    //5. if not, login failed
+  })
+
 module.exports = router;
