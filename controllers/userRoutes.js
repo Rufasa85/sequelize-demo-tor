@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/User");
 
@@ -110,7 +111,7 @@ router.delete("/:id", (req, res) => {
         res.status(401).json({msg:"incorrect username/password"})
       } else{
         //3. compare entered password to saved password
-        if(req.body.password!==foundUser.password){
+        if(!bcrypt.compareSync(req.body.password,foundUser.password)){
           res.status(401).json({msg:"incorrect username/password"})
         } else {
           //4. if match, send back record
