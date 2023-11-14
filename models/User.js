@@ -5,13 +5,23 @@ class User extends Model {}
 
 User.init({
     username: {
-         type: DataTypes.STRING
+         type: DataTypes.STRING,
+         allowNull:false
     },
     email:{
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        allowNull:false,
+        unique:true,
+        validate:{
+            isEmail:true
+        }
     },
     password:{
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+            len:[8]
+        }
     }
 },{
     sequelize
